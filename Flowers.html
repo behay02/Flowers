@@ -1,0 +1,436 @@
+Flower Garden
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+html,
+body {
+width: 100%;
+height: 100%;
+overflow: hidden;
+font-family: Arial, sans-serif;
+}
+body {
+background:
+radial-gradient(circle at 50% 25%, #fff8f0 0%, transparent 35%),
+linear-gradient(180deg, #f8e9dc 0%, #e9f0d5 100%);
+cursor: crosshair;
+touch-action: none;
+}
+/* Заголовок */
+.title {
+position: fixed;
+top: 30px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 1000;
+color: #453b3b;
+font-size: clamp(24px, 5vw, 42px);
+font-weight: 700;
+letter-spacing: 2px;
+text-align: center;
+pointer-events: none;
+}
+.subtitle {
+position: fixed;
+top: 82px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 1000;
+color: #766b67;
+font-size: 14px;
+text-align: center;
+pointer-events: none;
+}
+/* Сад */
+#garden {
+position: fixed;
+inset: 0;
+overflow: hidden;
+}
+/* Земля */
+.ground {
+position: absolute;
+left: -5%;
+bottom: -100px;
+width: 110%;
+height: 230px;
+background: #cbd8a8;
+border-radius: 50% 50% 0 0 / 35% 35% 0 0;
+box-shadow:
+inset 0 15px 35px rgba(80, 90, 50, 0.08);
+}
+/* Цветок */
+.flower {
+position: absolute;
+width: 0;
+height: 0;
+transform-origin: bottom center;
+animation: appear 0.45s ease-out forwards;
+}
+@keyframes appear {
+from {
+transform: scale(0);
+}
+to {
+transform: scale(1);
+}
+}
+/* Стебель */
+.stem {
+position: absolute;
+left: -2px;
+bottom: 0;
+width: 4px;
+height: 0;
+background: linear-gradient(
+to right,
+#557a42,
+#7e9c55
+);
+border-radius: 5px;
+transform-origin: bottom;
+animation: growStem 0.9s ease-out forwards;
+}
+@keyframes growStem {
+from {
+height: 0;
+}
+to {
+height: var(--stem-height);
+}
+}
+/* Листья */
+.leaf {
+position: absolute;
+width: 30px;
+height: 15px;
+background: #789451;
+border-radius: 100% 0 100% 0;
+opacity: 0;
+animation: leafAppear 0.5s ease-out forwards;
+}
+.leaf.left {
+left: -28px;
+bottom: 35%;
+transform: rotate(-25deg);
+animation-delay: 0.45s;
+}
+.leaf.right {
+left: 2px;
+bottom: 52%;
+transform: rotate(25deg) scaleX(-1);
+animation-delay: 0.6s;
+}
+@keyframes leafAppear {
+from {
+opacity: 0;
+transform: scale(0);
+}
+to {
+opacity: 1;
+}
+}
+/* Голова цветка */
+.flower-head {
+position: absolute;
+width: 70px;
+height: 70px;
+left: -35px;
+bottom: calc(var(--stem-height) - 35px);
+transform: scale(0);
+animation: flowerBloom 0.8s
+cubic-bezier(0.17, 0.67, 0.32, 1.35)
+forwards;
+animation-delay: 0.7s;
+}
+@keyframes flowerBloom {
+0% {
+transform: scale(0) rotate(-20deg);
+}
+70% {
+transform: scale(1.15) rotate(5deg);
+}
+100% {
+transform: scale(1) rotate(0deg);
+}
+}
+/* Лепестки */
+.petal {
+position: absolute;
+width: 32px;
+height: 42px;
+left: 19px;
+top: 14px;
+border-radius: 50% 50% 45% 45%;
+transform-origin: 50% 100%;
+}
+.petal:nth-child(1) {
+transform: rotate(0deg) translateY(-15px);
+}
+.petal:nth-child(2) {
+transform: rotate(45deg) translateY(-15px);
+}
+.petal:nth-child(3) {
+transform: rotate(90deg) translateY(-15px);
+}
+.petal:nth-child(4) {
+transform: rotate(135deg) translateY(-15px);
+}
+.petal:nth-child(5) {
+transform: rotate(180deg) translateY(-15px);
+}
+.petal:nth-child(6) {
+transform: rotate(225deg) translateY(-15px);
+}
+.petal:nth-child(7) {
+transform: rotate(270deg) translateY(-15px);
+}
+.petal:nth-child(8) {
+transform: rotate(315deg) translateY(-15px);
+}
+/* Центр */
+.center {
+position: absolute;
+width: 22px;
+height: 22px;
+left: 24px;
+top: 24px;
+background: #f3b83f;
+border-radius: 50%;
+box-shadow:
+0 0 0 3px rgba(255, 206, 75, 0.25),
+inset 2px 2px 4px rgba(120, 80, 20, 0.15);
+}
+/* Частицы */
+.particle {
+position: absolute;
+width: 6px;
+height: 6px;
+background: rgba(255, 255, 255, 0.75);
+border-radius: 50%;
+pointer-events: none;
+animation: particle 0.8s ease-out forwards;
+}
+@keyframes particle {
+0% {
+opacity: 1;
+transform: translate(0, 0) scale(1);
+}
+100% {
+opacity: 0;
+transform:
+translate(
+var(--x),
+var(--y)
+)
+scale(0);
+}
+}
+/* Кнопка очистки */
+.controls {
+position: fixed;
+left: 50%;
+bottom: 25px;
+transform: translateX(-50%);
+z-index: 2000;
+display: flex;
+gap: 10px;
+}
+button {
+border: none;
+padding: 12px 20px;
+border-radius: 30px;
+background: rgba(255, 255, 255, 0.75);
+color: #514744;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+backdrop-filter: blur(10px);
+box-shadow:
+0 5px 20px rgba(50, 40, 30, 0.1);
+transition:
+transform 0.2s,
+background 0.2s;
+}
+button:hover {
+transform: translateY(-2px);
+background: white;
+}
+button:active {
+transform: scale(0.95);
+}
+/* Счетчик */
+.counter {
+position: fixed;
+top: 25px;
+right: 25px;
+z-index: 2000;
+padding: 10px 16px;
+background: rgba(255, 255, 255, 0.6);
+border-radius: 30px;
+color: #665b58;
+font-size: 14px;
+backdrop-filter: blur(10px);
+}
+/* Небольшая адаптация телефона */
+@media (max-width: 600px) {
+.title {
+top: 25px;
+}
+.subtitle {
+top: 67px;
+}
+.counter {
+top: auto;
+right: 15px;
+bottom: 25px;
+}
+.controls {
+left: 15px;
+bottom: 25px;
+transform: none;
+}
+button {
+padding: 10px 15px;
+}
+}
+Flower Garden
+Нажми в любом месте, чтобы посадить цветок 🌱
+Цветов: 0
+Очистить сад
+🌸 Создать
+const garden = document.getElementById("garden");
+const countElement = document.getElementById("count");
+const clearButton = document.getElementById("clear");
+const randomButton = document.getElementById("random");
+let flowerCount = 0;
+/*
+Палитра цветов.
+Можно добавлять сюда свои цвета.
+*/
+const flowerColors = [
+"#f49ab0",
+"#f5b6d2",
+"#dba7ed",
+"#f7c76a",
+"#f28b82",
+"#a9c9f2",
+"#f6a6c1"
+];
+/*
+Создание цветка
+*/
+function createFlower(x, y) {
+// Не позволяем сажать цветы слишком высоко
+const minY = 130;
+if (y {
+particle.remove();
+}, 800);
+}
+}
+/*
+Клик мышкой
+*/
+garden.addEventListener(
+"click",
+function(event) {
+// Не создаем цветок при клике
+// по кнопке управления
+if (
+event.target.closest("button")
+) {
+return;
+}
+createFlower(
+event.clientX,
+event.clientY
+);
+}
+);
+/*
+Поддержка touch
+для мобильных устройств
+*/
+garden.addEventListener(
+"touchstart",
+function(event) {
+event.preventDefault();
+const touch =
+event.touches[0];
+createFlower(
+touch.clientX,
+touch.clientY
+);
+},
+{
+passive: false
+}
+);
+/*
+Очистить сад
+*/
+clearButton.addEventListener(
+"click",
+function(event) {
+event.stopPropagation();
+const flowers =
+garden.querySelectorAll(
+".flower"
+);
+flowers.forEach(
+flower => flower.remove()
+);
+flowerCount = 0;
+countElement.textContent = "0";
+}
+);
+/*
+Случайный цветок
+*/
+randomButton.addEventListener(
+"click",
+function(event) {
+event.stopPropagation();
+const width =
+window.innerWidth;
+const height =
+window.innerHeight;
+const x =
+50 +
+Math.random() *
+(width - 100);
+const y =
+180 +
+Math.random() *
+(height - 300);
+createFlower(x, y);
+}
+);
+/*
+Автоматически создаем несколько
+цветов при первом запуске
+*/
+setTimeout(() => {
+const width =
+window.innerWidth;
+const height =
+window.innerHeight;
+createFlower(
+width * 0.25,
+height * 0.65
+);
+setTimeout(() => {
+createFlower(
+width * 0.5,
+height * 0.72
+);
+}, 300);
+setTimeout(() => {
+createFlower(
+width * 0.75,
+height * 0.62
+);
+}, 600);
+}, 700);
